@@ -5,8 +5,6 @@ def replaceZeroes(data):
     min_nonzero = min(data[np.nonzero(data)])
     data[data == 0] = min_nonzero
     return data
-
-
 def MSR(img, scales):
     weight = 1 / 3.0
     scales_size = len(scales)
