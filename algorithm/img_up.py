@@ -1,8 +1,6 @@
 import numpy as np
 import cv2
 import os
-
-
 def replaceZeroes(data):
     min_nonzero = min(data[np.nonzero(data)])
     data[data == 0] = min_nonzero
