@@ -3,8 +3,8 @@
 download: bash data/scripts/get_coco.sh
 
 # train and val data as 1) directory: path/images/, 2) file: path/images.txt, or 3) list: [path1/images/, path2/images/]
-train: E:/大三上/软件工程/团队编程/head_datas/images_up/train  # 118287 images
-val: E:/大三上/软件工程/团队编程/head_datas/images_up/val   # 5000 images
+train: head_datas/images/train  # 118287 images
+val: head_datas/images/val   # 5000 images
 test: ../coco/test-dev2017.txt  # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
 
 # number of classes
