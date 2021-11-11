@@ -4,17 +4,21 @@
 # this file contains function that serve as webserver
 # and communicate library camera and algorithm.
 ###################################################
+import base64
+import hashlib
 
 from flask import Flask
 from flask import Response
 from flask import request
-
 import jwt
+
 from datetime import datetime, timedelta
+from PIL import Image
 
 import re
 import json
 import sqlite3
+import os
 
 import threading
 import time
@@ -191,12 +195,17 @@ def violation_handler():
                 row[6],
             ]
 
-            # TODO:读取图片并转化为base64编码
+            encoded_images = []
+
+            for i in images:
+                with open(i, 'rb') as f:
+                    base64_str = base64.b64encode(f.read())
+                    encoded_images.append(base64_str)
 
             hour_sta = {
                 "time": t,
                 "position": position,
-                "images": images
+                "images": encoded_images
             }
 
             data.append(hour_sta)
@@ -339,12 +348,17 @@ def his_violation_handler():
                 row[6],
             ]
 
-            # TODO:读取图片并转化为base64编码
+            encoded_images = []
+
+            for i in images:
+                with open(i, 'rb') as f:
+                    base64_str = base64.b64encode(f.read())
+                    encoded_images.append(base64_str)
 
             hour_sta = {
                 "time": t,
                 "position": position,
-                "images": images
+                "images": encoded_images
             }
 
             data.append(hour_sta)
@@ -414,25 +428,44 @@ def init():
 
     connection.close()
 
-def getPictures():
+def getPictures() -> list[Image]:
     pass
 
-def putPictures(pic: list):
+def putPictures(pic: list[Image]) -> list[str]:
+    root = os.getcwd().strip() + "/img/"
+    if not os.path.exists(root):
+        os.mkdir(root)
+
+    saved = []
+
+    for img in pic:
+        date_now = time.strftime("%Y-%m-%d", time.localtime())
+        time_now = time.strftime("%H-%M-%S", time.localtime())
+        hash = hashlib.sha1(bytes(img)).hexdigest()[0:8]
+
+        path = root + date_now + "/"
+        if not os.path.exists(path):
+            os.mkdir(path)
+
+        img_name = path + time_now + "-" + hash + ".jpg"
+        img.save(img_name)
+        saved.append(img_name)
+
+    return saved
+
+def process(imgs: list[str]):
     pass
 
-def process():
-    pass
-
-def setResults():
+def setResults(results):
     pass
 
 def process_handler():
     # step1: get pictures from camera
     pic = getPictures()
     # step2: store in local folder
-    putPictures(pic)
+    saved_img_path = putPictures(pic)
     # step3: send pictures to algorithm
-    res = process()
+    res = process(saved_img_path)
     # step4: put results to database
     setResults(res)
 
