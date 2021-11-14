@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    
+
+    <title>login</title>
 
     <style>
         *{
@@ -149,13 +151,13 @@
         </div>
         <div id="login">
             <form action="" method="post">
-                <div id="user">
+                <div id="user" >
                     <img src="image/user.svg" alt="" id="userimg">
-                    <input type="text" placeholder="账户" name="username">
+                    <input  type="text" placeholder="账户" name="username" id="username">
                 </div>
                 <div id="password">
                     <img src="image/lock.svg" alt="" id="pwdimg">
-                    <input type="password" placeholder="密码" name="password">
+                    <input type="password" placeholder="密码" name="password" id="pwd">
                 </div>
                 <div id="choose">
                     <input type="checkbox"  >自动登录
@@ -166,5 +168,43 @@
         </div>
     </div>
 
+
+    <script>
+        var xhr;
+        if(window.XMLHttpRequest)
+        {
+            xhr= new XMLHttpRequest()
+        }
+        else{
+            xhr=new ActiveXObject("Microsoft.XMLHTTP")
+        }
+
+        /* console.log(xhr) */
+        var user = document.getElementById("username");
+        var pwd = document.getElementById("pwd");
+        var uservalue = user.value;
+        var pwdvalue = pwd.value;
+
+        xhr.open("post","http://202.182.102.169:45786/api/login")
+        xhr.setRequestHeader('Content-Type','application/json')
+        xhr.send('{"username":' + uservalue + ',"password":' + pwdvalue + '}');
+
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4 && xhr.status == 200)
+            {
+                var res = xhr.responseText;
+                var resjson = eval("(" + res + ")");
+                console.log('resjson')
+                if(resjson.msg == 'success')
+                {
+                    console.log('登录成功');
+                }
+                else
+                {
+                    console.log('登录失败');
+                }
+            }
+        }
+    </script>
 </body>
 </html>
