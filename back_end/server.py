@@ -14,6 +14,7 @@ import jwt
 
 from datetime import datetime, timedelta
 from PIL import Image
+import cv2
 
 import re
 import json
@@ -429,19 +430,29 @@ def init():
     connection.close()
 
 def getPictures() -> list[Image]:
-    pass
+    capture = cv2.VideoCapture(os.getcwd().strip() + "/video/1.mp4")
+    tp = int(time.time()) % (2 * 60)
+    timer = 0
+    fps = round(capture.get(5))
+    while capture.isOpened():
+        timer += 1
+        ret, frame = capture.read()
+        if timer == tp * fps:
+            image = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+            return image
 
-def putPictures(pic: list[Image]) -> list[str]:
+def putPictures(pic: list) -> list[str]:
     root = os.getcwd().strip() + "/img/"
     if not os.path.exists(root):
         os.mkdir(root)
 
     saved = []
+    m=hashlib.md5()
 
     for img in pic:
         date_now = time.strftime("%Y-%m-%d", time.localtime())
         time_now = time.strftime("%H-%M-%S", time.localtime())
-        hash = hashlib.sha1(bytes(img)).hexdigest()[0:8]
+        hash = hashlib.sha1(img.tobytes()).hexdigest()[0:8]
 
         path = root + date_now + "/"
         if not os.path.exists(path):
@@ -462,12 +473,15 @@ def setResults(results):
 def process_handler():
     # step1: get pictures from camera
     pic = getPictures()
+
     # step2: store in local folder
-    saved_img_path = putPictures(pic)
+    saved_img_path = putPictures([pic])
+
     # step3: send pictures to algorithm
-    res = process(saved_img_path)
+    # res = process(saved_img_path)
+
     # step4: put results to database
-    setResults(res)
+    # setResults(res)
 
     # loop every 10 minute
     global timer
@@ -483,5 +497,5 @@ if __name__ == 'app':
 # for command line
 if __name__ == '__main__':
     init()
-    app.run(host="0.0.0.0", port=45786)
     process_handler()
+    app.run(host="0.0.0.0", port=45786)
