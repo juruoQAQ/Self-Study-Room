@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+
+    <title>login</title>
+
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            /* background-color: rgb(181, 214, 228); */
+        }
+        #all
+        {
+            width: 300px;
+            height: 400px;
+            margin: 150px auto ;
+            /* border-color: black;
+            border-style: solid; */
+        }
+        #logo
+        {
+            width: 280px;
+            height: 50px;
+            margin: 0 auto;
+            
+            /* border-color: rgb(32, 30, 30);
+            border-style: solid; */
+        }
+        #logo img
+        {
+            width: 50px;
+            float: left;
+            /* border-color: rgb(32, 30, 30);
+            border-style: solid; */
+        }
+        #logo span
+        { 
+            font-size: 21px;
+            float: left;
+            margin: 10px 0;
+        }
+        #term
+        {
+            width: 110px;
+            height: 30px;
+            font-size: 13px;
+            color: rgb(9, 144, 223);
+            text-align: center;
+           /*  border: solid black; */
+            margin: 13px auto 0;
+        }
+        #term hr
+        {
+            width: 110px;
+            height: 2px;
+            background-color: rgb(9, 144, 223);
+            border: none;
+            margin-top: 5px;
+        }
+        #login
+        {
+            width: 300px;
+            height: 240px;
+            /* border-color: rgb(32, 30, 30);
+            border-style: solid; */
+        }
+        #user
+        {
+            width: 300px;
+            height: 40px;
+            background-color: white;
+            border-color: rgb(185, 184, 184);
+            border-style: solid;
+            border-radius: 6px;
+            margin: 10px 0 ;
+        }
+        #user img{
+            width: 20px;
+            background-color: white;
+            margin: 10px 0 10px 5px;
+            float: left;
+        }
+        #user input{
+            width: 200px;
+            height: 40px;
+            background-color: white;
+            border: 0;
+            outline: none;
+            /* border: solid black; */
+           /*  margin: 5px 0; */
+        }
+        #password
+        {
+            width: 300px;
+            height: 40px;
+            background-color: white;
+            border-color: rgb(185, 184, 184);
+            border-style: solid;
+            border-radius: 6px;
+            margin: 18px 0 ;
+        }
+        #password img{
+            width: 20px;
+            background-color: white;
+            margin: 10px 0 10px 5px;
+            float: left;
+        }
+        #password input{
+            width: 200px;
+            height: 40px;
+            border: 0;
+            outline: none;
+            background-color: white;
+            /* margin: 5px 0; */
+        }
+        #choose{
+            width: 300px;
+            height: 20px;
+            font-size: 13px;
+            margin: 10px 0;
+            /* border-color: rgb(32, 30, 30);
+            border-style: solid; */
+        }
+        
+        #loginbtn
+        {
+            width: 300px;
+            height: 40px;
+            color: white;
+            background-color: rgb(29, 140, 245);
+            border-color: rgba(0, 0, 0,0);
+            border-style: solid;
+            border-radius: 6px;
+            margin: 5px 0;
+        }
+
+        #foot
+        {
+            background-color: #eeeeee;
+            position: absolute; 
+            bottom: 0; 
+            width: 100%; 
+            height: 116px;
+            text-align: center;
+            line-height: 116px;
+            overflow:hidden;
+            border: solid #eeeeee;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div id="all">
+        <div id="logo">
+            <img src="image/logo.png" alt="">
+            <span>图书馆自习室管理系统</span>
+        </div>
+        <div id="term">
+            账号密码登录<hr>
+        </div>
+        <div id="login">
+            <form >
+                <div id="user" >
+                    <img src="image/user.svg" alt="" id="userimg">
+                    <input  type="text" placeholder="账户" name="username" id="username">
+                </div>
+                <div id="password">
+                    <img src="image/lock.svg" alt="" id="pwdimg">
+                    <input type="password" placeholder="密码" name="password" id="pwd">
+                </div>
+                <div id="choose">
+                    <input type="checkbox"  >自动登录
+                </div>
+                
+                <input type="button" value="登 录" id="loginbtn">
+            </form>
+        </div>
+    </div>
+
+    <div  id="foot">
+         福州大学计算机与大数据学院软工团队-比奇堡养老队 版权所有Copyright © 2019 - 2025 FZU, All Rights Reserved
+    </div>
+   
+
+    <!-- <script>
+        var xhr;
+        if(window.XMLHttpRequest)
+        {
+            xhr= new XMLHttpRequest()
+        }
+        else{
+            xhr=new ActiveXObject("Microsoft.XMLHTTP")
+        }
+
+        /* console.log(xhr) */
+        xhr.withCredentials = true;
+        var user = document.getElementById("username");
+        var pwd = document.getElementById("pwd");
+        var uservalue = user.value;
+        var pwdvalue = pwd.value;
+
+        xhr.open("post","http://202.182.102.169:45786/api/login")
+        xhr.setRequestHeader('Content-Type','application/json')
+        xhr.send('{"username":' + uservalue + ',"password":' + pwdvalue + '}');
+
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState == 4 && xhr.status == 200)
+            {
+                var res = xhr.responseText;
+                var resjson = eval("(" + res + ")");
+                console.log('resjson')
+                if(resjson.msg == 'success')
+                {
+                    console.log('登录成功');
+                }
+                else
+                {
+                    console.log('登录失败');
+                }
+            }
+        }
+    </script> -->
+</body>
+
+<script type="text/javascript" src="jquery/jquery-3.6.0.js"></script>
+<script type="text/javascript">
+   
+    $("#loginbtn").on("click",function(){
+        var user = document.getElementById("username");
+        var pwd = document.getElementById("pwd");
+        var uservalue = user.value;
+        var pwdvalue = pwd.value;
+
+        var data={
+            "username": uservalue,
+            "password": pwdvalue
+        }
+        data=JSON.stringify(data); 
+        $.ajax({
+            type:"post",
+            url:"http://202.182.102.169:45786/api/login",
+            async: false,
+            data: data,
+            dataType:"json",
+            contentType:"application/json",
+            success:function(data){
+                if(data.code == 200)
+                {
+                    alert("登录成功")
+                }
+                alert(data);
+            },
+            error:function(msg){
+                alert(msg)
+            }
+        })
+        
+    })
+    
+</script>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="jquery/jquery-3.6.0.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <title>违规行为检测记录</title>
+
+    <style>
+        .tag1{
+            float: left;
+            height: 20px;
+            text-align: left;
+            font-size: 25px;
+            line-height: 0px;
+        }
+        #choose li
+        {
+            width: 100x;
+            text-align: center;
+            margin-top: 10px;
+        }
+        #search
+        {
+            width: 400px;
+            margin: 10px 0;
+        }
+        #month,#seatnum
+        {
+            margin-top: 25px;
+        }
+        #month li
+        {
+            width: 80px;
+            text-align: center;
+        }
+        #seatnum li
+        {
+            width: 80px;
+            text-align: center;
+        }
+        .show
+        {
+            width: 20%;
+            height: 150px; 
+            float: left;
+            background-color: rgb(195, 225, 238);
+            border: solid rgb(206, 201, 201); 
+            border-radius: 6px;
+            margin: 10px 2.5%; 
+            
+        }
+        .seatNum
+        {
+            width: 100%;
+            height: 60px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 60px;
+            border-bottom: solid rgb(228, 224, 224); 
+        }
+        .reason,.violateDate
+        {
+            width: 50%;
+            height: 90px;
+            float: left;
+           /*  border: solid black;  */
+        }
+        .reason .div1,.violateDate .div1
+        {
+            width: 100%;
+            height: 30px;
+            font-size: 13px;
+            text-align: center;
+            line-height: 30px;
+            /* border: solid black;  */
+        }
+        .reason .div2,.violateDate .div2
+        {
+            width: 100%;
+            height: 60px;
+            font-size: 18px;
+            text-align: center;
+            line-height: 40px;
+            /* border: solid black;  */
+        }
+    </style>
+</head>
+<body>
+    <!--页眉部分-->
+    <header class="container-fluid">
+        <div class="row">
+            <nav class="navbar navbar-inverse">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="首页/首页.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a href="违规行为检测记录.html" >违规行为检测记录 <span class="sr-only">(current)</span></a></li>
+                            <li><a href="#">人流量统计</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">设置 <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">离席超时设置</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="#">疫情防控座位设置</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <form class="navbar-form navbar-right">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search">
+                            </div>
+                            <button type="submit" class="btn btn-default">搜索</button>
+                        </form>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+            <h3 class="col-md-3 tag1"><span class="glyphicon glyphicon-check" aria-hidden="true"></span> 违规行为检测记录 </h3>
+        </div>
+    </header>
+    <hr >
+    <!--主体部分-->
+    <div class="container" >
+        <form class="navbar-form " >
+            <div class="form-group"id="search">
+                <input type="text" class="form-control " placeholder="关键词搜索" style="width: 300px; height: 45px;">
+                <button type="submit" class="btn btn-primary" style="width: 80px; height: 45px;">搜索</button>
+            </div>
+            
+        </form>
+
+        <div class="row" role="navigation" >
+            <ul class="nav nav-tabs" id="choose">
+                <li><a data-toggle="tab" href="#number">座位号</a></li>
+                <li class="active"><a data-toggle="tab" href="#date">日期</a></li>
+              </ul>
+
+            <div class="tab-content">
+                <div id="number" class="tab-pane fade ">
+                    <ul class="nav nav-pills" id="seatnum">
+                        <li class="active"><a href="#">全部</a></li>
+                        <li><a href="#">A区</a></li>
+                        <li><a href="#">B区</a></li>
+                        <li><a href="#">C区</a></li>
+                        
+                      </ul>
+                </div>
+
+                <div id="date" class="tab-pane fade in active">
+                    
+                    <ul class="nav nav-pills" id="month">
+                        <li class="active"><a href="#">全部</a></li>
+                        <li><a href="#">一月</a></li>
+                        <li><a href="#">二月</a></li>
+                        <li><a href="#">三月</a></li>
+                        <li><a href="#">四月</a></li>
+                        <li><a href="#">五月</a></li>
+                        <li><a href="#">六月</a></li>
+                        <li><a href="#">七月</a></li>
+                        <li><a href="#">八月</a></li>
+                        <li><a href="#">九月</a></li>
+                        <li><a href="#">十月</a></li>
+                        <li><a href="#">十一月</a></li>
+                        <li><a href="#">十二月</a></li>
+                      </ul>
+                </div>
+            </div>
+
+            <hr>
+
+            <form class="bs-example bs-example-form" role="form">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="name">学年</label>
+                           
+                            <select class="form-control" >
+                              <option>2019</option>
+                              <option>2020</option>
+                              <option selected="selected">2021</option>
+                            </select>
+                       
+                        </div><!-- /form-group -->
+                    </div>
+                    <!-- /.col-lg-6 -->
+                    <div class="col-lg-4 col-md-offset-1">
+                        <div class="form-group">
+                            <label for="name">学期</label>
+                            <select class="form-control">
+                              <option>1</option>
+                              <option>2</option>
+                            </select>
+                        </div><!-- /form-group -->
+                    </div><!-- /.col-lg-6 -->
+                </div><!-- /.row -->
+            </form>
+        </div>
+
+        <div class="row" style="margin: 30px 0; ">
+            <div  class="show">
+                <div class="seatNum">
+                    12号座位
+                </div>
+                <div>
+                    <div class="reason">
+                        <div class="div1"> <span class="glyphicon glyphicon-zoom-in"></span> 违规事由</div>
+                        <div class="div2"> 长时间占座</div>
+                    </div>
+                    <div class="violateDate">
+                        <div class="div1"><span class="glyphicon glyphicon-time"></span>日期</div> 
+                        <div class="div2">2021/2/11</div> 
+                    </div>
+                </div>
+            </div>
+            <div  class="show">
+                <div class="seatNum">
+                    101号座位
+                </div>
+                <div>
+                    <div class="reason">
+                        <div class="div1"><span class="glyphicon glyphicon-zoom-in"></span> 违规事由</div>
+                        <div class="div2"> 违反防疫行为</div>
+                    </div>
+                    <div class="violateDate">
+                        <div class="div1"><span class="glyphicon glyphicon-time"></span>日期</div> 
+                        <div class="div2">2021/2/4</div> 
+                    </div>
+                </div>
+            </div>
+            <div  class="show">
+                <div class="seatNum">
+                    497号座位
+                </div>
+                <div>
+                    <div class="reason">
+                        <div class="div1"><span class="glyphicon glyphicon-zoom-in"></span> 违规事由</div>
+                        <div class="div2"> 长时间占座</div>
+                    </div>
+                    <div class="violateDate">
+                        <div class="div1"><span class="glyphicon glyphicon-time"></span>日期</div> 
+                        <div class="div2">2021/2/4</div> 
+                    </div>
+                </div>
+            </div>
+            <div  class="show">
+                <div class="seatNum">
+                    97号座位
+                </div>
+                <div>
+                    <div class="reason">
+                        <div class="div1"> <span class="glyphicon glyphicon-zoom-in"></span>违规事由</div>
+                        <div class="div2"> 违反防疫行为</div>
+                    </div>
+                    <div class="violateDate">
+                        <div class="div1"><span class="glyphicon glyphicon-time"></span>日期</div> 
+                        <div class="div2">2021/2/7</div> 
+                    </div>
+                </div>
+            </div>
+
+            <div  class="show">
+                <div class="seatNum">
+                    600号座位
+                </div>
+                <div>
+                    <div class="reason">
+                        <div class="div1"> <span class="glyphicon glyphicon-zoom-in"></span>违规事由</div>
+                        <div class="div2"> 长时间占座</div>
+                    </div>
+                    <div class="violateDate">
+                        <div class="div1"><span class="glyphicon glyphicon-time"></span>日期</div> 
+                        <div class="div2">2021/2/11</div> 
+                    </div>
+                </div>
+            </div>
+            <div  class="show">
+                <div class="seatNum">
+                    97号座位
+                </div>
+                <div>
+                    <div class="reason">
+                        <div class="div1"><span class="glyphicon glyphicon-zoom-in"></span> 违规事由</div>
+                        <div class="div2"> 违反防疫行为</div>
+                    </div>
+                    <div class="violateDate">
+                        <div class="div1"><span class="glyphicon glyphicon-time"></span>日期</div> 
+                        <div class="div2">2021/2/12</div> 
+                    </div>
+                </div>
+            </div>
+            <div  class="show">
+                <div class="seatNum">
+                    99号座位
+                </div>
+                <div>
+                    <div class="reason">
+                        <div class="div1"><span class="glyphicon glyphicon-zoom-in"></span> 违规事由</div>
+                        <div class="div2"> 长时间占座</div>
+                    </div>
+                    <div class="violateDate">
+                        <div class="div1"><span class="glyphicon glyphicon-time"></span>日期</div> 
+                        <div class="div2">2021/2/15</div> 
+                    </div>
+                </div>
+            </div>
+            <div  class="show">
+                <div class="seatNum">
+                    101号座位
+                </div>
+                <div>
+                    <div class="reason">
+                        <div class="div1"> <span class="glyphicon glyphicon-zoom-in"></span>违规事由</div>
+                        <div class="div2"> 违反防疫行为</div>
+                    </div>
+                    <div class="violateDate">
+                        <div class="div1"><span class="glyphicon glyphicon-time"></span>日期</div> 
+                        <div class="div2">2021/2/21</div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    
+    <!--页脚部分-->
+    <footer class="container-fluid">
+        <div class="jumbotron text-center " style="margin-bottom:0;">
+            福州大学计算机与大数据学院软工团队-比奇堡养老队 版权所有Copyright © 2019 - 2025 FZU, All Rights Reserved
+        </div>
+    </footer>
+</body>
+</html>
