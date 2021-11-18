@@ -1,5 +1,6 @@
+opencv_python==4.5.4.58
 Flask==2.0.2
+flask_cors==3.0.10
+flask_sqlalchemy==2.5.1
 Pillow==8.4.0
 PyJWT==2.3.0
-opencv-python~=4.5.4.58
-SQLAlchemy~=1.4.27

@@ -19,9 +19,10 @@ import cv2
 import re
 import json
 import os
-from sqlalchemy import Column, Integer, String, create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from flask_sqlalchemy import SQLAlchemy
+# from sqlalchemy import db.Column, db.Integer, db.String, create_engine
+# from sqlalchemy.ext.declarative import declarative_db.Model
+# from sqlalchemy.orm import sessionmaker
 
 import threading
 import time
@@ -32,53 +33,52 @@ import time
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 SECRET_KEY = 'gr_ehe^%*gbf3w*()dw&^'
-DBNAME = "db/librarian.db"
-engine = create_engine('sqlite:///db/library.db')
-global session
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db/library.db'
+# engine = create_engine('sqlite:///db/library.db')
 
 ########################################
-#          database definition         #
+#          datadb.Model definition         #
 ########################################
-Base = declarative_base()
+db = SQLAlchemy(app)
 
 
-class __account__(Base):
+class __account__(db.Model):
     __tablename__ = '__account__'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    username = Column(String)
-    password = Column(String)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String)
+    password = db.Column(db.String)
 
 
-class __statistics__(Base):
+class __statistics__(db.Model):
     __tablename__ = '__statistics__'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    date = Column(String)
-    time = Column(String)
-    traffic = Column(Integer)
-    violation = Column(Integer)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    date = db.Column(db.String)
+    time = db.Column(db.String)
+    traffic = db.Column(db.Integer)
+    violation = db.Column(db.Integer)
 
 
-class __violation__(Base):
+class __violation__(db.Model):
     __tablename__ = '__violation__'
 
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    date = Column(String)
-    time = Column(String)
-    position = Column(Integer)
-    pic1 = Column(String)
-    pic2 = Column(String)
-    pic3 = Column(String)
-    pic4 = Column(String)
-    pic5 = Column(String)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    date = db.Column(db.String)
+    time = db.Column(db.String)
+    position = db.Column(db.Integer)
+    pic1 = db.Column(db.String)
+    pic2 = db.Column(db.String)
+    pic3 = db.Column(db.String)
+    pic4 = db.Column(db.String)
+    pic5 = db.Column(db.String)
 
 
 ########################################
 #             http handler             #
 #  The front end reads server data     #
 #  through specific API. All data      #
-#  stored in local data base in ./db   #
+#  stored in local data db.Model in ./db   #
 ########################################
 @app.route('/', methods=['GET', 'POST'])
 def hello_world():
@@ -94,7 +94,7 @@ def login_handler():
     username = re.sub('[\'\"\n\r=]', '', username)
     password = re.sub('[\'\"\n\r=]', '', password)
 
-    account = session.query(__account__).filter(__account__.username == username, __account__.password == password)
+    account = __account__.query.filter(__account__.username == username, __account__.password == password)
     if account.count() != 0:
         # generate token
         payload = {
@@ -126,7 +126,7 @@ def statistics_handler():
     info = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
     username = info["username"]
 
-    account = session.query(__account__).filter(__account__.username == username)
+    account = __account__.query.filter(__account__.username == username)
     if account.count() == 0:
         ret = {
             'code': 401,
@@ -136,7 +136,7 @@ def statistics_handler():
 
     data = []
 
-    res = session.query(__statistics__).filter(__statistics__.date == date_now)
+    res = __statistics__.query.filter(__statistics__.date == date_now)
     for row in res:
         t = row.time
         traffic = row.traffic
@@ -167,7 +167,7 @@ def violation_handler():
     info = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
     username = info["username"]
 
-    account = session.query(__account__).filter(__account__.username == username)
+    account = __account__.query.filter(__account__.username == username)
     if account.count() == 0:
         ret = {
             'code': 401,
@@ -177,7 +177,7 @@ def violation_handler():
 
     data = []
 
-    res = session.query(__violation__).filter(__violation__.date == date_now)
+    res = __violation__.query.filter(__violation__.date == date_now)
     for row in res:
         t = row.time
         position = row.position
@@ -192,8 +192,8 @@ def violation_handler():
         encoded_images = []
         for i in images:
             with open(i, 'rb') as f:
-                base64_str = base64.b64encode(f.read())
-                encoded_images.append(base64_str)
+                db.Model64_str = base64.b64encode(f.read())
+                encoded_images.append(db.Model64_str)
 
         hour_sta = {
             "time": t,
@@ -220,7 +220,7 @@ def his_statistics_handler():
     info = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
     username = info["username"]
 
-    account = session.query(__account__).filter(__account__.username == username)
+    account = __account__.query.filter(__account__.username == username)
     if account.count() == 0:
         ret = {
             'code': 401,
@@ -229,7 +229,7 @@ def his_statistics_handler():
         return json.dumps(ret, ensure_ascii=False), 401
 
     data = []
-    res = session.query(__statistics__).filter(__statistics__.date == date_now)
+    res = __statistics__.query.filter(__statistics__.date == date_now)
     for row in res:
         t = row.time
         traffic = row.traffic
@@ -272,7 +272,7 @@ def his_violation_handler():
     info = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
     username = info["username"]
 
-    account = session.query(__account__).filter(__account__.username == username)
+    account = __account__.query.filter(__account__.username == username)
     if account.count() == 0:
         ret = {
             'code': 401,
@@ -281,7 +281,7 @@ def his_violation_handler():
         return json.dumps(ret, ensure_ascii=False), 401
 
     data = []
-    res = session.query(__violation__).filter(__violation__.date == date_now, __violation__.position == position)
+    res = __violation__.query.filter(__violation__.date == date_now, __violation__.position == position)
     for row in res:
         t = row.time
         position = row.position
@@ -297,8 +297,8 @@ def his_violation_handler():
 
         for i in images:
             with open(i, 'rb') as f:
-                base64_str = base64.b64encode(f.read())
-                encoded_images.append(base64_str)
+                db.Model64_str = base64.b64encode(f.read())
+                encoded_images.append(db.Model64_str)
 
         hour_sta = {
             "time": t,
@@ -318,10 +318,7 @@ def his_violation_handler():
 
 
 def init():
-    Base.metadata.create_all(engine)
-    smaker = sessionmaker(bind=engine)
-    global session
-    session = smaker()
+    db.create_all()
 
 
 def getPictures() -> list[Image]:
@@ -379,7 +376,7 @@ def process_handler():
     # step3: send pictures to algorithm
     # res = process(saved_img_path)
 
-    # step4: put results to database
+    # step4: put results to datadb.Model
     # setResults(res)
 
     # loop every 10 minute
