@@ -174,7 +174,7 @@
                     <input type="password" placeholder="密码" name="password" id="pwd">
                 </div>
                 <div id="choose">
-                    <input type="checkbox"  >自动登录
+                    <input type="checkbox"  id="autologin">自动登录
                 </div>
                 
                 <input type="button" value="登 录" id="loginbtn">
@@ -229,7 +229,17 @@
 
 <script type="text/javascript" src="jquery/jquery-3.6.0.js"></script>
 <script type="text/javascript">
-   
+    $("#autologin").click(function(){
+        var user = document.getElementById("username");
+        var pwd = document.getElementById("pwd");
+        if ($('#autologin').prop('checked')) 
+        {
+            user.value = "root";
+            pwd.value = "123456";
+        }
+        
+    })
+
     $("#loginbtn").on("click",function(){
         var user = document.getElementById("username");
         var pwd = document.getElementById("pwd");
@@ -251,12 +261,13 @@
             success:function(data){
                 if(data.code == 200)
                 {
-                    alert("登录成功")
+                    alert("登录成功");
+                    localStorage.setItem('token',data.token);
+                    location.href="../自习室管理系统-首页/首页.html"
                 }
-                alert(data);
             },
             error:function(msg){
-                alert(msg)
+                alert("登录失败")
             }
         })
         
