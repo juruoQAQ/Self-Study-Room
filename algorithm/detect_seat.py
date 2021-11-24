@@ -48,14 +48,15 @@ def cal_iou(bbox1, bbox2):
     xx1 = np.max([xmin1, xmin2])
     yy1 = np.max([ymin1, ymin2])
     xx2 = np.min([xmax1, xmax2])
-    yy2 = np.max([ymax1, ymax2])
+    yy2 = np.min([ymax1, ymax2])
 
-    aera1 = (xmax1 - xmin1) * (ymax1 - ymin1)
-    aera2 = (xmax2 - xmin2) * (ymax2 - ymin2)
+    aera1 = (xmax1 - xmin1 + 1) * (ymax1 - ymin1 + 1)
+    aera2 = (xmax2 - xmin2 + 1) * (ymax2 - ymin2 + 1)
 
     inter_aera = (np.max([0, xx2 - xx1])) * (np.max([0, yy2 - yy1]))
-    iou = inter_aera / (aera1 + aera2 - inter_aera + 1e-6)
-    return iou
+    # iou = inter_aera / (aera1 + aera2 - inter_aera + 1e-6)
+    fake_iou = inter_aera / (aera1 + 1e-6)
+    return fake_iou
 
 
 def is_center(bbox1, bbox2):
@@ -82,7 +83,8 @@ def detect(img_path, reserved_seats, empty_seats):
             str_list = line.split()
             head_array.append(str_list)
             head_count += 1
-    head_locations = get_coordinate(h, w, head_array, 0.4)  # 获取人头中心坐标
+    head_center_locations = get_coordinate(h, w, head_array, 0.55)  # 获取人头中心坐标
+    head_locations = get_coordinate(h, w, head_array, 1.0)  # 获取人头坐标
     reserved_locations = get_coordinate(h, w, reserved_locations, 1.0)  # 获取预约座位坐标
     empty_locations = get_coordinate(h, w, empty_locations, 1.0)  # 获取空置座位坐标
     empty_seats_number = []  # 预约但无人座位号
@@ -90,17 +92,20 @@ def detect(img_path, reserved_seats, empty_seats):
 
     # 对每个预约座位进行遍历，如果无人就画框并记录座位号
     for i in range(len(reserved_locations)):
-        max_iou = 0
+        max_iou = 0.0
         head_number = 0
+        found = False
         for j in range(len(head_locations)):
             iou = cal_iou(head_locations[j][1:5], reserved_locations[i][1:5])
-            if iou > max_iou:
+            # print(iou, head_locations[j][1:5], reserved_locations[i][1:5])
+            if iou > max_iou and iou > 0.6:
+                found = True
                 max_iou = iou
                 head_number = j
+        # print(max_iou)
+        have_head = is_center(head_center_locations[head_number][1:5], reserved_locations[i][1:5])
 
-        have_head = is_center(head_locations[head_number][1:5], reserved_locations[i][1:5])
-
-        if not have_head:
+        if not have_head and not found:
             cv2.rectangle(detected_img, (reserved_locations[i][1], reserved_locations[i][2]),
                           (reserved_locations[i][3], reserved_locations[i][4]), (0, 255, 0), 1)
             text = reserved_locations[i][0]
@@ -111,13 +116,17 @@ def detect(img_path, reserved_seats, empty_seats):
 
     # 对每个空置座位框进行遍历，如果有人就画框并记录座位号
     for i in range(len(empty_locations)):
-        head_appear = False
-        for j in range(len(head_locations)):
-            if (head_locations[j][1] >= empty_locations[i][1] and head_locations[j][2] >= empty_locations[i][2]
-                    and head_locations[j][3] <= empty_locations[i][3] and head_locations[j][4] <= empty_locations[i][4]):
-                head_appear = True
-                break
-        if head_appear:
+        max_iou = 0.0
+        head_number = 0
+        found = False
+        for j in range(len(head_center_locations)):
+            iou = cal_iou(head_locations[j][1:5], empty_locations[i][1:5])
+            if iou > max_iou and iou > 0.6:
+                found = True
+                max_iou = iou
+                head_number = j
+        have_head = is_center(head_center_locations[head_number][1:5], empty_locations[i][1:5])
+        if have_head and found:
             cv2.rectangle(detected_img, (empty_locations[i][1], empty_locations[i][2]),
                           (empty_locations[i][3], empty_locations[i][4]), (205, 0, 0), 1)
             text = empty_locations[i][0]
@@ -131,9 +140,10 @@ def detect(img_path, reserved_seats, empty_seats):
 
 
 if __name__ == '__main__':
-    iou = cal_iou([0, 0, 100, 100], [100, 100, 500, 500])
+    iou = cal_iou([0, 0, 500, 500], [ 0, 0, 100, 100])
     img = 'data/images/studyroom.png'
-    reserved_seat = list(range(200, 300))
+    reserved_seat = list(range(100, 500))
+    # reserved_seat = [150]
     # empty_seat = [231, 239, 242, 256, 259, 268, 277]
     empty_seat = [276]
     # empty_seat = list(range(200, 350))
