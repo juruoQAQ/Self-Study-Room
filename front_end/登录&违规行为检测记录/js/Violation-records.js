@@ -5,10 +5,10 @@ $(function() {
     $.ajax
     ({
         type:"get",
-        url:"8.tcp.ngrok.io:18872/api/violation",
+        url:"http://120.79.14.83:7401/api/violation",
         data:{},
         dataType:"json",
-        async:true,
+        
         contentType:"application/json",
         headers:{"Authorization": token},
         success:function(data)
@@ -29,14 +29,14 @@ $(function() {
                                     $("<div>", {class: "reason"}).append
                                     (
                                         $("<div>", {class: "div1"}).append($("<span>", {class: "glyphicon glyphicon-zoom-in"}).text("违规事由")),
-                                        $("<div>", {class: "div2"}).text("长时间占座")
+                                        $("<div>", {class: "div2"}).text(data.data[i].reason)
                                     ),
         
                                     $("<div>", {class: "violateDate"}).append
                                     (
                                         $("<div>", {class: "div1"}).append($("<span>", {class: "glyphicon glyphicon-time"}).text("日期")),
                                         $("<div>", {class: "div2"}).text(data.date)
-                                    ),
+                                    )
                                 ).appendTo($("#displayArea"))
                             }
                         }
@@ -55,7 +55,7 @@ $(function() {
                                 (
                                     $("<div>", {class: "div1"}).append($("<span>", {class: "glyphicon glyphicon-time"}).text("日期")),
                                     $("<div>", {class: "div2"}).text(data.date)
-                                ),
+                                )
                             ).appendTo($("#displayArea"))
                         }
                         
@@ -112,7 +112,7 @@ $("#searchmsg").click(function(){
     {
         datevalue = searchvalue;
         var senddata={
-            "date": datevalue
+            date: datevalue
         };
 
     }
@@ -120,7 +120,7 @@ $("#searchmsg").click(function(){
     {
         positionvalue=searchvalue;
         var senddata={
-            "position": positionvalue
+            position: positionvalue
         };
     }
 
@@ -130,11 +130,11 @@ $("#searchmsg").click(function(){
     
     $.ajax
     ({
-        type:"get",
-        url:"8.tcp.ngrok.io:18872/api/history/violation",
+        type:"post",
+        url:"http://120.79.14.83:7401/api/history/violation",
         data:senddata,
         dataType:"json",
-        async:true,
+        
         contentType:"application/json",
         headers:{"Authorization": token},
         success:function(data)
@@ -149,6 +149,31 @@ $("#searchmsg").click(function(){
 
                     if(data.data.length != 0)
                     {
+                        /* for(var i = 0;i<data.data.length;i++)
+                        {
+                            var show = $("<div>", {class: "show"}).append(
+                                $("<div>", {class: "seatNum"}).append($("<span>").text(data.data[i].position+"号座位")), 
+    
+                                $("<div>", {class: "reason"}).append
+                                (
+                                    $("<div>", {class: "div1"}).append($("<span>", {class: "glyphicon glyphicon-zoom-in"}).text("违规事由")),
+                                  
+                                ),
+                            )
+
+                            if(data.data[i].reason == '座位应为空')
+                            {
+                                $("<div>", {class: "reason"}).append(
+                                    $("<div>", {class: "div2"}).text("违反防疫规定")
+                                )
+                            }
+                                $("<div>", {class: "violateDate"}).append
+                                (
+                                    $("<div>", {class: "div1"}).append($("<span>", {class: "glyphicon glyphicon-time"}).text("日期")),
+                                    $("<div>", {class: "div2"}).text(data.data[i].date)
+                                )
+                            
+                        } */
                         for(var i = 0;i<data.data.length;i++)
                         {
                             $("<div>", {class: "show"}).append(
@@ -157,14 +182,14 @@ $("#searchmsg").click(function(){
                                 $("<div>", {class: "reason"}).append
                                 (
                                     $("<div>", {class: "div1"}).append($("<span>", {class: "glyphicon glyphicon-zoom-in"}).text("违规事由")),
-                                    $("<div>", {class: "div2"}).text("长时间占座")
+                                    $("<div>", {class: "div2"}).text(data.data[i].reason)
                                 ),
-    
+                                
                                 $("<div>", {class: "violateDate"}).append
                                 (
                                     $("<div>", {class: "div1"}).append($("<span>", {class: "glyphicon glyphicon-time"}).text("日期")),
                                     $("<div>", {class: "div2"}).text(data.data[i].date)
-                                ),
+                                )
                             ).appendTo($("#displayArea"))
                         }
                     }
@@ -183,7 +208,7 @@ $("#searchmsg").click(function(){
                             (
                                 $("<div>", {class: "div1"}).append($("<span>", {class: "glyphicon glyphicon-time"}).text("日期")),
                                 $("<div>", {class: "div2"}).text(data.data[i].date)
-                            ),
+                            )
                         ).appendTo($("#displayArea"))
                     }
                         
