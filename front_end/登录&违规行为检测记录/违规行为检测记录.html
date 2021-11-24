@@ -83,14 +83,14 @@
         {
             width: 100%;
             height: 60px;
-            font-size: 18px;
+            font-size: 16px;
             text-align: center;
             line-height: 40px;
             /* border: solid black;  */
         }
     </style>
 </head>
-<body>
+<body >
     <!--页眉部分-->
     <header class="container-fluid">
         <div class="row">
@@ -104,14 +104,14 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="首页/首页.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页</a>
+                        <a class="navbar-brand" href="自习室管理系统-首页/首页.html"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> 首页</a>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="collapse-1">
                         <ul class="nav navbar-nav">
                             <li><a href="违规行为检测记录.html" >违规行为检测记录 <span class="sr-only">(current)</span></a></li>
-                            <li><a href="#">人流量统计</a></li>
+                            <li><a href="../自习室管理系统-人流量统计/人流量统计.html">人流量统计</a></li>
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">设置 <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
@@ -136,10 +136,28 @@
     <hr >
     <!--主体部分-->
     <div class="container" >
+        <!-- <form class="navbar-form " >
+            <div class="row">
+                <div class="col-lg-10">
+                    <div class="input-group input-group-lg">
+                        <div class="input-group-btn input-group-lg">
+                            <select name="" id="idsel" class="form-control" >
+                                <option value="date">日期</option>
+                                <option value="position">座位号</option>
+                            </select>
+                        </div>
+                        <input type="text" class="form-control" id="searchValue">
+                        <div class="input-group-btn input-group-lg">
+                            <button  class="btn btn-primary" id="searchmsg">搜索</button>
+                        </div>
+                    </div>	
+                </div><br>
+            </div>
+        </form> -->
         <form class="navbar-form " >
             <div class="form-group"id="search">
-                <input type="text" class="form-control " placeholder="关键词搜索" style="width: 300px; height: 45px;">
-                <button type="submit" class="btn btn-primary" style="width: 80px; height: 45px;">搜索</button>
+                <input type="text" class="form-control " id="searchValue" placeholder="关键词搜索" style="width: 300px; height: 45px;">
+                <button type="button" class="btn btn-primary" id="searchmsg" style="width: 80px; height: 45px;">搜索</button>
             </div>
             
         </form>
@@ -183,7 +201,7 @@
 
             <hr>
 
-            <form class="bs-example bs-example-form" role="form">
+            <!-- <form class="bs-example bs-example-form" role="form">
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="form-group">
@@ -195,9 +213,9 @@
                               <option selected="selected">2021</option>
                             </select>
                        
-                        </div><!-- /form-group -->
+                        </div>
                     </div>
-                    <!-- /.col-lg-6 -->
+                    
                     <div class="col-lg-4 col-md-offset-1">
                         <div class="form-group">
                             <label for="name">学期</label>
@@ -205,134 +223,14 @@
                               <option>1</option>
                               <option>2</option>
                             </select>
-                        </div><!-- /form-group -->
-                    </div><!-- /.col-lg-6 -->
-                </div><!-- /.row -->
-            </form>
+                        </div>
+                    </div>
+                </div>
+            </form> -->
         </div>
 
-        <div class="row" style="margin: 30px 0; ">
-            <div  class="show">
-                <div class="seatNum">
-                    12号座位
-                </div>
-                <div>
-                    <div class="reason">
-                        <div class="div1"> <span class="glyphicon glyphicon-zoom-in"></span> 违规事由</div>
-                        <div class="div2"> 长时间占座</div>
-                    </div>
-                    <div class="violateDate">
-                        <div class="div1"><span class="glyphicon glyphicon-time"></span>日期</div> 
-                        <div class="div2">2021/2/11</div> 
-                    </div>
-                </div>
-            </div>
-            <div  class="show">
-                <div class="seatNum">
-                    101号座位
-                </div>
-                <div>
-                    <div class="reason">
-                        <div class="div1"><span class="glyphicon glyphicon-zoom-in"></span> 违规事由</div>
-                        <div class="div2"> 违反防疫行为</div>
-                    </div>
-                    <div class="violateDate">
-                        <div class="div1"><span class="glyphicon glyphicon-time"></span>日期</div> 
-                        <div class="div2">2021/2/4</div> 
-                    </div>
-                </div>
-            </div>
-            <div  class="show">
-                <div class="seatNum">
-                    497号座位
-                </div>
-                <div>
-                    <div class="reason">
-                        <div class="div1"><span class="glyphicon glyphicon-zoom-in"></span> 违规事由</div>
-                        <div class="div2"> 长时间占座</div>
-                    </div>
-                    <div class="violateDate">
-                        <div class="div1"><span class="glyphicon glyphicon-time"></span>日期</div> 
-                        <div class="div2">2021/2/4</div> 
-                    </div>
-                </div>
-            </div>
-            <div  class="show">
-                <div class="seatNum">
-                    97号座位
-                </div>
-                <div>
-                    <div class="reason">
-                        <div class="div1"> <span class="glyphicon glyphicon-zoom-in"></span>违规事由</div>
-                        <div class="div2"> 违反防疫行为</div>
-                    </div>
-                    <div class="violateDate">
-                        <div class="div1"><span class="glyphicon glyphicon-time"></span>日期</div> 
-                        <div class="div2">2021/2/7</div> 
-                    </div>
-                </div>
-            </div>
-
-            <div  class="show">
-                <div class="seatNum">
-                    600号座位
-                </div>
-                <div>
-                    <div class="reason">
-                        <div class="div1"> <span class="glyphicon glyphicon-zoom-in"></span>违规事由</div>
-                        <div class="div2"> 长时间占座</div>
-                    </div>
-                    <div class="violateDate">
-                        <div class="div1"><span class="glyphicon glyphicon-time"></span>日期</div> 
-                        <div class="div2">2021/2/11</div> 
-                    </div>
-                </div>
-            </div>
-            <div  class="show">
-                <div class="seatNum">
-                    97号座位
-                </div>
-                <div>
-                    <div class="reason">
-                        <div class="div1"><span class="glyphicon glyphicon-zoom-in"></span> 违规事由</div>
-                        <div class="div2"> 违反防疫行为</div>
-                    </div>
-                    <div class="violateDate">
-                        <div class="div1"><span class="glyphicon glyphicon-time"></span>日期</div> 
-                        <div class="div2">2021/2/12</div> 
-                    </div>
-                </div>
-            </div>
-            <div  class="show">
-                <div class="seatNum">
-                    99号座位
-                </div>
-                <div>
-                    <div class="reason">
-                        <div class="div1"><span class="glyphicon glyphicon-zoom-in"></span> 违规事由</div>
-                        <div class="div2"> 长时间占座</div>
-                    </div>
-                    <div class="violateDate">
-                        <div class="div1"><span class="glyphicon glyphicon-time"></span>日期</div> 
-                        <div class="div2">2021/2/15</div> 
-                    </div>
-                </div>
-            </div>
-            <div  class="show">
-                <div class="seatNum">
-                    101号座位
-                </div>
-                <div>
-                    <div class="reason">
-                        <div class="div1"> <span class="glyphicon glyphicon-zoom-in"></span>违规事由</div>
-                        <div class="div2"> 违反防疫行为</div>
-                    </div>
-                    <div class="violateDate">
-                        <div class="div1"><span class="glyphicon glyphicon-time"></span>日期</div> 
-                        <div class="div2">2021/2/21</div> 
-                    </div>
-                </div>
-            </div>
+        <div class="row" style="margin: 30px 0; " id="displayArea">
+            
         </div>
 
 
@@ -341,9 +239,11 @@
     
     <!--页脚部分-->
     <footer class="container-fluid">
-        <div class="jumbotron text-center " style="margin-bottom:0;">
+        <div class="jumbotron text-center " style="margin-bottom: 0;">
             福州大学计算机与大数据学院软工团队-比奇堡养老队 版权所有Copyright © 2019 - 2025 FZU, All Rights Reserved
         </div>
     </footer>
 </body>
+    <script src="js/Violation-records.js"></script>
 </html>
+
