@@ -1,0 +1,143 @@
+
+.wall{
+font-size:2px;
+margin-left:128px;
+}
+.p{
+width=48px;
+height:48px;
+margin:10px 5px 0px 333px;
+}
+.north{
+font-size:1px;
+margin:100px 0px 10px 10px;
+}
+div.seatCharts-cell {
+	color: #182C4E;
+	height: 25px;
+	width: 25px;
+	line-height: 25px;
+	
+}
+div.seatCharts-cell.desks {
+	color: #182C4E;
+	height: 24px;
+	width: 34px;
+	line-height: 15px;
+}
+div.seatCharts-cell.sseats {
+	color: #182C4E;
+	height: 25px;
+	width: 25px;
+	line-height: 25px;
+	margin-right:12px;
+}div.seatCharts-cell.e {
+	color: #182C4E;
+	height: 288px;
+	width: 202px;
+	line-height: 25px;
+	margin-right:12px;
+}
+div.seatCharts-cell.b {
+	color: #182C4E;
+	height:18px;
+	width: 209px;
+	line-height: 25px;
+	margin-right:12px;
+}
+div.seatCharts-cell.c {
+	color: #182C4E;
+	height:18px;
+	width: 209px;
+	line-height: 25px;
+	margin-right:12px;
+}
+div.seatCharts-seat {
+	color: #FFFFFF;
+	cursor: pointer;	
+}
+div.seatCharts-row {
+	height: 35px;
+}
+div.seatCharts-seat.available {
+	background-color: #B9DEA0;
+
+}
+div.seatCharts-seat.available.sseats {
+ 	background: url(ava.png); 
+	background-color: #3a78c3;
+}
+div.seatCharts-seat.available.desks {
+ 	background: url(desks.png); 
+	background-color: #3a78c3;
+}
+div.seatCharts-seat.available.b {
+ 	background: url(b.png); 
+	
+}
+div.seatCharts-seat.available.c {
+ 	background: url(c.png); 
+	
+}
+div.seatCharts-seat.focused.sseats{
+	background: url(ava.png); 
+	
+}
+div.seatCharts-seat.focused.numbers{
+	background-color: #ffffff;
+	
+}
+div.seatCharts-seat.focused.b{
+	background: url(b.png);
+}
+div.seatCharts-seat.focused.c{
+	background: url(c.png);
+}
+div.seatCharts-seat.available.numbers {
+	background-color: #ffffff;
+}
+div.seatCharts-seat.selected.sseats {
+	background: url(use.png);
+	background-color: #E6CAC4;
+}
+div.seatCharts-seat.unavailable {
+	background-color: #ccc;
+}
+div.seatCharts-seat.unavailable.b {
+	background: url(b.png); 
+}
+div.seatCharts-seat.unavailable.e {
+	background: url(entr.png); 
+}
+div.seatCharts-seat.unavailable.c {
+	background: url(c.png); 
+}
+div.seatCharts-seat.unavailable.desks {
+	background: url(desks.png); 
+}
+div.seatCharts-seat.unavailable.numbers {
+	background-color: #ffffff;
+}
+
+div.seatCharts-legend {
+	padding-left: 0px;
+	bottom: 0;
+}
+ul.seatCharts-legendList {
+	padding-left: 0px;
+}
+span.seatCharts-legendDescription {
+	margin-left: 5px;
+	line-height: 30px;
+}
+.checkout-button {
+	display: block;
+	margin: 10px 0;
+	font-size: 14px;
+}
+#selected-seats {
+	max-height: 200px;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	width: 170px;
+}
