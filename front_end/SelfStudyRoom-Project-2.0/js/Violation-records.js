@@ -295,5 +295,102 @@ $("#month li").click(function(){
 })    
     
 
+$("#seatnum li").click(function(){
+    var token = localStorage.getItem('token')
 
+    var searchitem = document.getElementById("searchValue");
+    searchitem.value = ''
+    var jq = $('#seatnum li')
+    jq.removeClass('active'); 
+    $(this).addClass('active'); 
+    var test = $(this ).find("a").html();
+    /* console.log(test) */
+
+    var senddata
+    if(test == '全部')
+    {
+        senddata = {date:'2021'}
+    }
+    else if(test == 'A区')
+    {
+        senddata = {position:-1}
+    }
+    else if(test == 'B区')
+    {
+        senddata = {position:-2}
+    }
+    else 
+    {
+        senddata = {position:-3}
+    }
+ 
+    senddata=JSON.stringify(senddata); 
+    console.log(senddata)
+    $.ajax
+    ({
+        type:"post",
+        url:"http://120.79.14.83:7401/api/history/violation",
+        data:senddata,
+        dataType:"json",
+        
+        contentType:"application/json",
+        headers:{"Authorization": token},
+        success:function(data)
+            {
+                if(data.code == 200)
+                {
+                    alert("success")
+                     /* alert(data.data)  */
+
+                    $(".show").remove()
+                    
+
+                    if(data.data.length != 0)
+                    {
+                        for(var i = 0;i<data.data.length;i++)
+                        {
+                            $("<div>", {class: "show"}).append(
+                                $("<div>", {class: "seatNum"}).append($("<span>").text(data.data[i].position+"号座位")), 
+    
+                                $("<div>", {class: "reason"}).append
+                                (
+                                    $("<div>", {class: "div1"}).append($("<span>", {class: "glyphicon glyphicon-zoom-in"}).text("违规事由")),
+                                    $("<div>", {class: "div2"}).text("长时间占座")
+                                ),
+    
+                                $("<div>", {class: "violateDate"}).append
+                                (
+                                    $("<div>", {class: "div1"}).append($("<span>", {class: "glyphicon glyphicon-time"}).text("日期")),
+                                    $("<div>", {class: "div2"}).text(data.data[i].date)
+                                ),
+                            ).appendTo($("#displayArea"))
+                        }
+                    }
+                    else
+                    {
+                        $("<div>", {class: "show"}).append(
+                            $("<div>", {class: "seatNum"}).append($("<span>").text("无违规座位")), 
+
+                            $("<div>", {class: "reason"}).append
+                            (
+                                $("<div>", {class: "div1"}).append($("<span>", {class: "glyphicon glyphicon-zoom-in"}).text("违规事由")),
+                                $("<div>", {class: "div2"}).text("无")
+                            ),
+
+                            $("<div>", {class: "violateDate"}).append
+                            (
+                                $("<div>", {class: "div1"}).append($("<span>", {class: "glyphicon glyphicon-time"}).text("日期")),
+                                $("<div>", {class: "div2"}).text('无')
+                            ),
+                        ).appendTo($("#displayArea"))
+                    }
+                        
+                }
+            },
+        error:function()
+            {
+                alert("fail")
+            }
+    })
+})    
             
